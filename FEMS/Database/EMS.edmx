@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_fname" Type="varchar(max)" Nullable="false" />
+          <Property Name="client_lname" Type="varchar(max)" Nullable="false" />
+          <Property Name="client_nic" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="client_address" Type="varchar(max)" Nullable="false" />
+          <Property Name="client_mobile" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="client_company" Type="varchar(max)" Nullable="false" />
+          <Property Name="client_username" Type="varchar(max)" Nullable="false" />
+          <Property Name="client_status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emp_progresses">
+          <Key>
+            <PropertyRef Name="emp_progress_id" />
+          </Key>
+          <Property Name="emp_progress_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_progress_working_hrs" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_progress_month_year" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_progress_nopay_days" Type="int" Nullable="false" />
+          <Property Name="emp_progress_status" Type="int" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emp_task_ref">
+          <Key>
+            <PropertyRef Name="emp_task_ref_id" />
+          </Key>
+          <Property Name="emp_task_ref_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="task_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employees">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_fname" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_lname" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_nic" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="emp_dob" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_gender" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_address" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_mobile" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="emp_work_started_date" Type="varchar(max)" Nullable="false" />
+          <Property Name="emp_status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="project_progress">
+          <Key>
+            <PropertyRef Name="progress_id" />
+          </Key>
+          <Property Name="progress_id" Type="int" Nullable="false" />
+          <Property Name="no_of_tasks" Type="int" Nullable="false" />
+          <Property Name="days_remaining" Type="int" Nullable="false" />
+          <Property Name="no_of_finished_tasks" Type="int" Nullable="false" />
+          <Property Name="project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="projects">
+          <Key>
+            <PropertyRef Name="project_id" />
+          </Key>
+          <Property Name="project_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="project_name" Type="varchar(max)" Nullable="false" />
+          <Property Name="project_location" Type="varchar(max)" Nullable="false" />
+          <Property Name="project_budget" Type="varchar(max)" Nullable="false" />
+          <Property Name="project_assign_date" Type="varchar(max)" Nullable="false" />
+          <Property Name="project_deadline" Type="varchar(max)" Nullable="false" />
+          <Property Name="project_approval_status" Type="int" Nullable="false" />
+          <Property Name="project_status" Type="int" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tasks">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="task_name" Type="varchar(max)" Nullable="false" />
+          <Property Name="task_description" Type="varchar(max)" Nullable="false" />
+          <Property Name="task_started_date" Type="varchar(max)" Nullable="false" />
+          <Property Name="task_end_date" Type="varchar(max)" Nullable="false" />
+          <Property Name="task_state" Type="int" Nullable="false" />
+          <Property Name="task_status" Type="int" Nullable="false" />
+          <Property Name="project_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_emp_progresses_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="emp_progresses" Type="Self.emp_progresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="emp_progresses">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_progresses_projects">
+          <End Role="projects" Type="Self.projects" Multiplicity="1" />
+          <End Role="emp_progresses" Type="Self.emp_progresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projects">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="emp_progresses">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_task_ref_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="emp_task_ref" Type="Self.emp_task_ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="emp_task_ref">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_task_ref_tasks">
+          <End Role="tasks" Type="Self.tasks" Multiplicity="1" />
+          <End Role="emp_task_ref" Type="Self.emp_task_ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tasks">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="emp_task_ref">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_client">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="projects" Type="Self.projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="projects">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_progress_projects">
+          <End Role="projects" Type="Self.projects" Multiplicity="1" />
+          <End Role="project_progress" Type="Self.project_progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projects">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="project_progress">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tasks_projects">
+          <End Role="projects" Type="Self.projects" Multiplicity="1" />
+          <End Role="tasks" Type="Self.tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="projects">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="tasks">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMSDBModelStoreContainer">
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_progresses" EntityType="Self.emp_progresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_task_ref" EntityType="Self.emp_task_ref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="project_progress" EntityType="Self.project_progress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tasks" EntityType="Self.tasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_emp_progresses_employees" Association="Self.FK_emp_progresses_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="emp_progresses" EntitySet="emp_progresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_progresses_projects" Association="Self.FK_emp_progresses_projects">
+            <End Role="projects" EntitySet="projects" />
+            <End Role="emp_progresses" EntitySet="emp_progresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_task_ref_employees" Association="Self.FK_emp_task_ref_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="emp_task_ref" EntitySet="emp_task_ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_task_ref_tasks" Association="Self.FK_emp_task_ref_tasks">
+            <End Role="tasks" EntitySet="tasks" />
+            <End Role="emp_task_ref" EntitySet="emp_task_ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_client" Association="Self.FK_project_client">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="projects" EntitySet="projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_progress_projects" Association="Self.FK_project_progress_projects">
+            <End Role="projects" EntitySet="projects" />
+            <End Role="project_progress" EntitySet="project_progress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tasks_projects" Association="Self.FK_tasks_projects">
+            <End Role="projects" EntitySet="projects" />
+            <End Role="tasks" EntitySet="tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMSDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clients" EntityType="EMSDBModel.client" />
+          <EntitySet Name="emp_progresses" EntityType="EMSDBModel.emp_progresses" />
+          <EntitySet Name="emp_task_ref" EntityType="EMSDBModel.emp_task_ref" />
+          <EntitySet Name="employees" EntityType="EMSDBModel.employee" />
+          <EntitySet Name="project_progress" EntityType="EMSDBModel.project_progress" />
+          <EntitySet Name="projects" EntityType="EMSDBModel.project" />
+          <EntitySet Name="tasks" EntityType="EMSDBModel.task" />
+          <AssociationSet Name="FK_project_client" Association="EMSDBModel.FK_project_client">
+            <End Role="client" EntitySet="clients" />
+            <End Role="project" EntitySet="projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_progresses_employees" Association="EMSDBModel.FK_emp_progresses_employees">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="emp_progresses" EntitySet="emp_progresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_progresses_projects" Association="EMSDBModel.FK_emp_progresses_projects">
+            <End Role="project" EntitySet="projects" />
+            <End Role="emp_progresses" EntitySet="emp_progresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_task_ref_employees" Association="EMSDBModel.FK_emp_task_ref_employees">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="emp_task_ref" EntitySet="emp_task_ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_task_ref_tasks" Association="EMSDBModel.FK_emp_task_ref_tasks">
+            <End Role="task" EntitySet="tasks" />
+            <End Role="emp_task_ref" EntitySet="emp_task_ref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_project_progress_projects" Association="EMSDBModel.FK_project_progress_projects">
+            <End Role="project" EntitySet="projects" />
+            <End Role="project_progress" EntitySet="project_progress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tasks_projects" Association="EMSDBModel.FK_tasks_projects">
+            <End Role="project" EntitySet="projects" />
+            <End Role="task" EntitySet="tasks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_fname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="client_lname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="client_nic" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="client_address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="client_mobile" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="client_company" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="client_username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="client_status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="projects" Relationship="EMSDBModel.FK_project_client" FromRole="client" ToRole="project" />
+        </EntityType>
+        <EntityType Name="emp_progresses">
+          <Key>
+            <PropertyRef Name="emp_progress_id" />
+          </Key>
+          <Property Name="emp_progress_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_progress_working_hrs" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_progress_month_year" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_progress_nopay_days" Type="Int32" Nullable="false" />
+          <Property Name="emp_progress_status" Type="Int32" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="project_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="EMSDBModel.FK_emp_progresses_employees" FromRole="emp_progresses" ToRole="employee" />
+          <NavigationProperty Name="project" Relationship="EMSDBModel.FK_emp_progresses_projects" FromRole="emp_progresses" ToRole="project" />
+        </EntityType>
+        <EntityType Name="emp_task_ref">
+          <Key>
+            <PropertyRef Name="emp_task_ref_id" />
+          </Key>
+          <Property Name="emp_task_ref_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <Property Name="task_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="EMSDBModel.FK_emp_task_ref_employees" FromRole="emp_task_ref" ToRole="employee" />
+          <NavigationProperty Name="task" Relationship="EMSDBModel.FK_emp_task_ref_tasks" FromRole="emp_task_ref" ToRole="task" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_fname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_lname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_nic" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="emp_dob" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_gender" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_mobile" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_designation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="emp_work_started_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="emp_status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="emp_progresses" Relationship="EMSDBModel.FK_emp_progresses_employees" FromRole="employee" ToRole="emp_progresses" />
+          <NavigationProperty Name="emp_task_ref" Relationship="EMSDBModel.FK_emp_task_ref_employees" FromRole="employee" ToRole="emp_task_ref" />
+        </EntityType>
+        <EntityType Name="project_progress">
+          <Key>
+            <PropertyRef Name="progress_id" />
+          </Key>
+          <Property Name="progress_id" Type="Int32" Nullable="false" />
+          <Property Name="no_of_tasks" Type="Int32" Nullable="false" />
+          <Property Name="days_remaining" Type="Int32" Nullable="false" />
+          <Property Name="no_of_finished_tasks" Type="Int32" Nullable="false" />
+          <Property Name="project_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="project" Relationship="EMSDBModel.FK_project_progress_projects" FromRole="project_progress" ToRole="project" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="project_id" />
+          </Key>
+          <Property Name="project_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="project_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="project_location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="project_budget" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="project_assign_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="project_deadline" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="project_approval_status" Type="Int32" Nullable="false" />
+          <Property Name="project_status" Type="Int32" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="EMSDBModel.FK_project_client" FromRole="project" ToRole="client" />
+          <NavigationProperty Name="emp_progresses" Relationship="EMSDBModel.FK_emp_progresses_projects" FromRole="project" ToRole="emp_progresses" />
+          <NavigationProperty Name="project_progress" Relationship="EMSDBModel.FK_project_progress_projects" FromRole="project" ToRole="project_progress" />
+          <NavigationProperty Name="tasks" Relationship="EMSDBModel.FK_tasks_projects" FromRole="project" ToRole="task" />
+        </EntityType>
+        <EntityType Name="task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="task_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_started_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_end_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="task_state" Type="Int32" Nullable="false" />
+          <Property Name="task_status" Type="Int32" Nullable="false" />
+          <Property Name="project_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="emp_task_ref" Relationship="EMSDBModel.FK_emp_task_ref_tasks" FromRole="task" ToRole="emp_task_ref" />
+          <NavigationProperty Name="project" Relationship="EMSDBModel.FK_tasks_projects" FromRole="task" ToRole="project" />
+        </EntityType>
+        <Association Name="FK_project_client">
+          <End Type="EMSDBModel.client" Role="client" Multiplicity="1" />
+          <End Type="EMSDBModel.project" Role="project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_progresses_employees">
+          <End Type="EMSDBModel.employee" Role="employee" Multiplicity="1" />
+          <End Type="EMSDBModel.emp_progresses" Role="emp_progresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="emp_progresses">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_progresses_projects">
+          <End Type="EMSDBModel.project" Role="project" Multiplicity="1" />
+          <End Type="EMSDBModel.emp_progresses" Role="emp_progresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="emp_progresses">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_task_ref_employees">
+          <End Type="EMSDBModel.employee" Role="employee" Multiplicity="1" />
+          <End Type="EMSDBModel.emp_task_ref" Role="emp_task_ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="emp_task_ref">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_task_ref_tasks">
+          <End Type="EMSDBModel.task" Role="task" Multiplicity="1" />
+          <End Type="EMSDBModel.emp_task_ref" Role="emp_task_ref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="emp_task_ref">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_project_progress_projects">
+          <End Type="EMSDBModel.project" Role="project" Multiplicity="1" />
+          <End Type="EMSDBModel.project_progress" Role="project_progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="project_progress">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tasks_projects">
+          <End Type="EMSDBModel.project" Role="project" Multiplicity="1" />
+          <End Type="EMSDBModel.task" Role="task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="task">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMSDBModelStoreContainer" CdmEntityContainer="EMSEntities">
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="EMSDBModel.client">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="client_status" ColumnName="client_status" />
+                <ScalarProperty Name="client_username" ColumnName="client_username" />
+                <ScalarProperty Name="client_company" ColumnName="client_company" />
+                <ScalarProperty Name="client_mobile" ColumnName="client_mobile" />
+                <ScalarProperty Name="client_address" ColumnName="client_address" />
+                <ScalarProperty Name="client_nic" ColumnName="client_nic" />
+                <ScalarProperty Name="client_lname" ColumnName="client_lname" />
+                <ScalarProperty Name="client_fname" ColumnName="client_fname" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_progresses">
+            <EntityTypeMapping TypeName="EMSDBModel.emp_progresses">
+              <MappingFragment StoreEntitySet="emp_progresses">
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="emp_progress_status" ColumnName="emp_progress_status" />
+                <ScalarProperty Name="emp_progress_nopay_days" ColumnName="emp_progress_nopay_days" />
+                <ScalarProperty Name="emp_progress_month_year" ColumnName="emp_progress_month_year" />
+                <ScalarProperty Name="emp_progress_working_hrs" ColumnName="emp_progress_working_hrs" />
+                <ScalarProperty Name="emp_progress_id" ColumnName="emp_progress_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_task_ref">
+            <EntityTypeMapping TypeName="EMSDBModel.emp_task_ref">
+              <MappingFragment StoreEntitySet="emp_task_ref">
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="emp_task_ref_id" ColumnName="emp_task_ref_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="EMSDBModel.employee">
+              <MappingFragment StoreEntitySet="employees">
+                <ScalarProperty Name="emp_status" ColumnName="emp_status" />
+                <ScalarProperty Name="emp_work_started_date" ColumnName="emp_work_started_date" />
+                <ScalarProperty Name="emp_designation" ColumnName="emp_designation" />
+                <ScalarProperty Name="emp_mobile" ColumnName="emp_mobile" />
+                <ScalarProperty Name="emp_address" ColumnName="emp_address" />
+                <ScalarProperty Name="emp_gender" ColumnName="emp_gender" />
+                <ScalarProperty Name="emp_dob" ColumnName="emp_dob" />
+                <ScalarProperty Name="emp_nic" ColumnName="emp_nic" />
+                <ScalarProperty Name="emp_lname" ColumnName="emp_lname" />
+                <ScalarProperty Name="emp_fname" ColumnName="emp_fname" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="project_progress">
+            <EntityTypeMapping TypeName="EMSDBModel.project_progress">
+              <MappingFragment StoreEntitySet="project_progress">
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="no_of_finished_tasks" ColumnName="no_of_finished_tasks" />
+                <ScalarProperty Name="days_remaining" ColumnName="days_remaining" />
+                <ScalarProperty Name="no_of_tasks" ColumnName="no_of_tasks" />
+                <ScalarProperty Name="progress_id" ColumnName="progress_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projects">
+            <EntityTypeMapping TypeName="EMSDBModel.project">
+              <MappingFragment StoreEntitySet="projects">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="project_status" ColumnName="project_status" />
+                <ScalarProperty Name="project_approval_status" ColumnName="project_approval_status" />
+                <ScalarProperty Name="project_deadline" ColumnName="project_deadline" />
+                <ScalarProperty Name="project_assign_date" ColumnName="project_assign_date" />
+                <ScalarProperty Name="project_budget" ColumnName="project_budget" />
+                <ScalarProperty Name="project_location" ColumnName="project_location" />
+                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tasks">
+            <EntityTypeMapping TypeName="EMSDBModel.task">
+              <MappingFragment StoreEntitySet="tasks">
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="task_status" ColumnName="task_status" />
+                <ScalarProperty Name="task_state" ColumnName="task_state" />
+                <ScalarProperty Name="task_end_date" ColumnName="task_end_date" />
+                <ScalarProperty Name="task_started_date" ColumnName="task_started_date" />
+                <ScalarProperty Name="task_description" ColumnName="task_description" />
+                <ScalarProperty Name="task_name" ColumnName="task_name" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

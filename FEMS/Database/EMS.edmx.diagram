@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c3a788c4a351478a81f84b9f45762b15" Name="Diagram1">
+        <EntityTypeShape EntityType="EMSDBModel.client" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="EMSDBModel.emp_progresses" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="EMSDBModel.emp_task_ref" Width="1.5" PointX="7.5" PointY="11.5" />
+        <EntityTypeShape EntityType="EMSDBModel.employee" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="EMSDBModel.project_progress" Width="1.5" PointX="5.25" PointY="8.125" />
+        <EntityTypeShape EntityType="EMSDBModel.project" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="EMSDBModel.task" Width="1.5" PointX="5.25" PointY="11" />
+        <AssociationConnector Association="EMSDBModel.FK_project_client" />
+        <AssociationConnector Association="EMSDBModel.FK_emp_progresses_employees" />
+        <AssociationConnector Association="EMSDBModel.FK_emp_progresses_projects" />
+        <AssociationConnector Association="EMSDBModel.FK_emp_task_ref_employees" />
+        <AssociationConnector Association="EMSDBModel.FK_emp_task_ref_tasks" />
+        <AssociationConnector Association="EMSDBModel.FK_project_progress_projects" />
+        <AssociationConnector Association="EMSDBModel.FK_tasks_projects" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

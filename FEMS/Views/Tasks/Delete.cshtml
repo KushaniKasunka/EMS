@@ -1,0 +1,74 @@
+﻿@model FEMS.Database.task
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.task_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.task_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.task_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.task_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.task_started_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.task_started_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.task_end_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.task_end_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.task_state)
+        </dt>
+
+        <dd>
+            @if (Model.task_state == 1)
+            {
+                @Html.DisplayName("To Do")
+            }
+            else
+            {
+                @Html.DisplayName("Done")
+            }
+        </dd>
+
+        
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.task_id)
+        @Html.HiddenFor(model => model.task_description)
+        @Html.HiddenFor(model => model.task_end_date)
+        @Html.HiddenFor(model => model.task_name)
+        @Html.HiddenFor(model => model.task_started_date)
+        @Html.HiddenFor(model => model.task_state)
+        @Html.HiddenFor(model => model.project_id)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

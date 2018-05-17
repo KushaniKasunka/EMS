@@ -1,0 +1,40 @@
+﻿@model FEMS.Database.emp_task_ref
+
+@{
+    ViewBag.Title = "AssignTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Assign Task</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.emp_id)
+    
+    <div class="form-horizontal">
+        <h4>Add Task For Employee</h4>
+        <hr />
+
+        <p style="color:green">Note : Each and every task has unique name and all task are listed according to the projects</p>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.task.task_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.task_id, (SelectList)ViewBag.tasks, "Select", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.task_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

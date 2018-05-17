@@ -1,0 +1,80 @@
+﻿@model IEnumerable<FEMS.Database.client>
+
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Clients</h2>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+
+
+
+
+<div class="code-cut">
+    @Html.Grid(Model).Columns(Columns =>
+{
+    Columns.Add().RenderValueAs(c => c.client_fname +" "+ c.client_lname).Titled("Full Name").Filterable(true);
+    Columns.Add(c => c.client_nic).Titled("NIC").Filterable(true);
+    Columns.Add(c => c.client_company).Titled("Company").Filterable(true);
+    Columns.Add(c => c.client_mobile).Titled("Mobile").Filterable(true);
+    Columns.Add(c => c.client_address).Titled("Address").Filterable(true);
+
+    if (User.IsInRole("Admin"))
+    {
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Projects", "getProjectReport", "Clients", new { id = c.client_id }, htmlAttributes: new { @class = "btn btn-warning btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Edit", "Edit", "Clients", new { id = c.client_id }, htmlAttributes: new { @class = "btn btn-warning btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Details", "Details", "Clients", new { id = c.client_id }, htmlAttributes: new { @class = "btn btn-info btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Delete", "Delete", "Clients", new { id = c.client_id }, htmlAttributes: new { @class = "btn btn-danger btn-primary btn-sm" })
+            .ToHtmlString());
+    }
+
+    if (User.IsInRole("Manager"))
+    {
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Projects", "getProjectReport", "Clients", new { id = c.client_id }, htmlAttributes: new { @class = "btn btn-warning btn-primary btn-sm" })
+            .ToHtmlString());
+    }
+
+}).WithPaging(10).Sortable().Filterable()
+</div>

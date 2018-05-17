@@ -1,0 +1,66 @@
+﻿@model FEMS.Database.client
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.client_fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_nic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_nic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.client_company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.client_company)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.client_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

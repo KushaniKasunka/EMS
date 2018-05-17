@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FEMS.Models;
+using FEMS.ControllerManager.ClientsControllerManager;
+using FEMS.Database;
 
 namespace FEMS.Controllers
 {
@@ -151,6 +153,18 @@ namespace FEMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                client dbclient = new client();
+                dbclient.client_fname = model.client_fname;
+                dbclient.client_lname = model.client_lname;
+                dbclient.client_address = model.client_address;
+                dbclient.client_company = model.client_company;
+                dbclient.client_mobile = model.client_mobile;
+                dbclient.client_nic = model.client_nic;
+                dbclient.client_username = model.Email;
+
+                ClientsControllerManager ClientsControllerManager = new ClientsControllerManager();
+                ClientsControllerManager.saveClient(dbclient);
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -163,7 +177,7 @@ namespace FEMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Projects");
                 }
                 AddErrors(result);
             }

@@ -1,0 +1,153 @@
+﻿@model FEMS.Database.employee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_nic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_nic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_dob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_dob)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_gender)
+        </dt>
+
+        <dd>
+            @if (Model.emp_gender.Equals("1"))
+            {
+                @Html.DisplayName("Male")
+            }
+            else
+            {
+                @Html.DisplayName("Female")
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_designation)
+        </dt>
+
+        <dd>
+            @if (Model.emp_designation.Equals("1"))
+            {
+                @Html.DisplayName("Project Manager")
+            }
+            else if (Model.emp_designation.Equals("2"))
+            {
+                @Html.DisplayName("Engineering Manager")
+            }
+            else if (Model.emp_designation.Equals("3"))
+            {
+                @Html.DisplayName("Electrical Engineer")
+            }
+            else if (Model.emp_designation.Equals("4"))
+            {
+                @Html.DisplayName("Technical Engineer")
+            }
+            else if (Model.emp_designation.Equals("5"))
+            {
+                @Html.DisplayName("Assistant Electrical Engineer")
+            }
+            else if (Model.emp_designation.Equals("6"))
+            {
+                @Html.DisplayName("Assistant Technical Engineer")
+            }
+            else if (Model.emp_designation.Equals("7"))
+            {
+                @Html.DisplayName("Technician")
+            }
+            else if (Model.emp_designation.Equals("8"))
+            {
+                @Html.DisplayName("Operator")
+            }
+            else if (Model.emp_designation.Equals("9"))
+            {
+                @Html.DisplayName("Labour")
+            }
+            else
+            {
+                @Html.DisplayName("Foreman")
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_work_started_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_work_started_date)
+        </dd>
+
+       </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.emp_address)
+        @Html.HiddenFor(model => model.emp_designation)
+        @Html.HiddenFor(model => model.emp_dob)
+        @Html.HiddenFor(model => model.emp_fname)
+        @Html.HiddenFor(model => model.emp_gender)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.emp_lname)
+        @Html.HiddenFor(model => model.emp_mobile)
+        @Html.HiddenFor(model => model.emp_nic)
+        @Html.HiddenFor(model => model.emp_work_started_date)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

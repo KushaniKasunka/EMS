@@ -1,0 +1,55 @@
+﻿@model FEMS.Database.emp_progresses
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee Progresses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_working_hrs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_working_hrs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_month_year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_month_year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_nopay_days)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_nopay_days)
+        </dd>
+
+     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.emp_progress_id)
+        @Html.HiddenFor(model => model.emp_progress_month_year)
+        @Html.HiddenFor(model => model.emp_progress_nopay_days)
+        @Html.HiddenFor(model => model.emp_progress_working_hrs)
+        @Html.HiddenFor(model => model.emp_id)
+        @Html.HiddenFor(model => model.project_id)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

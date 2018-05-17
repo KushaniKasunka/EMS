@@ -1,0 +1,75 @@
+﻿@model IEnumerable<FEMS.Database.project>
+
+@{
+    ViewBag.Title = "getProjectToPDF";
+    Layout = null;
+}
+
+<h2>@Html.DisplayNameFor(model => model.project_name)</h2>
+<h4>@Html.DisplayNameFor(model => model.client.client_fname+""+model.client.client_lname)</h4>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.task_description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.task_started_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.task_end_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.task_state)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    if (item.task_state == 1)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_started_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_end_date)
+            </td>
+            <td>
+                @Html.DisplayName("To Do")
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_started_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.task_end_date)
+            </td>
+            <td>
+                @Html.DisplayName("Done")
+            </td>
+        </tr>
+    }
+}
+
+</table>

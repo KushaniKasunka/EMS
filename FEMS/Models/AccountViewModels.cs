@@ -79,6 +79,31 @@ namespace FEMS.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First Name is Required")]
+        public string client_fname { get; set; }
+
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last Name is Required")]
+        public string client_lname { get; set; }
+
+        [Display(Name = "NIC")]
+        [Required(ErrorMessage = "NIC is Required")]
+        public string client_nic { get; set; }
+
+        [Display(Name = "Address")]
+        [Required(ErrorMessage = "Address is Required")]
+        public string client_address { get; set; }
+
+        [Display(Name = "Mobile")]
+        [Phone]
+        [Required(ErrorMessage = "Mobile number is Required")]
+        public string client_mobile { get; set; }
+
+        [Display(Name = "Company Name")]
+        [Required(ErrorMessage = "Company name is Required")]
+        public string client_company { get; set; }
     }
 
     public class ResetPasswordViewModel

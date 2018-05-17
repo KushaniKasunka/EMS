@@ -1,0 +1,43 @@
+﻿@model FEMS.Database.emp_progresses
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee Progresses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_working_hrs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_working_hrs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_month_year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_month_year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emp_progress_nopay_days)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emp_progress_nopay_days)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.emp_progress_id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

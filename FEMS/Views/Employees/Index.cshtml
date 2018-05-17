@@ -1,0 +1,112 @@
+﻿@model IEnumerable<FEMS.Database.employee>
+
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Employees</h2>
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+
+@if(User.IsInRole("Admin"))
+{
+<p>
+    @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-success btn-primary btn-sm" })
+</p>
+}
+
+
+<div class="code-cut">
+    @Html.Grid(Model).Columns(Columns =>
+{
+    Columns.Add().RenderValueAs(e => e.emp_fname + " " + e.emp_lname).Titled("Full Name").SetWidth(150).Filterable(true);
+    Columns.Add(e => e.emp_nic).Titled("NIC").Filterable(true);
+    Columns.Add(e => e.emp_dob).Titled("Date of Birth").Filterable(true);
+    Columns.Add(e => e.emp_address).Titled("Address").Filterable(true);
+    Columns.Add(e => e.emp_mobile).Titled("Mobile").Filterable(true);
+
+    if (User.IsInRole("Manager"))
+    {
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Tasks", "getTaskReport", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-success btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+    .Titled("")
+    .SetWidth(15)
+    .Filterable(true)
+    .Sanitized(false)
+    .Encoded(false)
+    .RenderValueAs(e => Html.ActionLink("Details", "Details", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-info btn-primary btn-sm" })
+    .ToHtmlString());
+    }
+
+    if (User.IsInRole("Admin"))
+    {
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Assign", "AssignTask", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-success btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Tasks", "getTaskReport", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-success btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Progress", "AddProgress", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-success btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Edit", "Edit", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-warning btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Details", "Details", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-info btn-primary btn-sm" })
+            .ToHtmlString());
+
+        Columns.Add()
+            .Titled("")
+            .SetWidth(15)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(e => Html.ActionLink("Delete", "Delete", "Employees", new { id = e.emp_id }, htmlAttributes: new { @class = "btn btn-danger btn-primary btn-sm" })
+            .ToHtmlString());
+    }
+
+}).WithPaging(10).Sortable().Filterable()
+</div>

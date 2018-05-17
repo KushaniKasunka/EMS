@@ -1,0 +1,43 @@
+﻿@model FEMS.Database.project_progress
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>project_progress</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.no_of_tasks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.no_of_tasks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.days_remaining)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.days_remaining)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.no_of_finished_tasks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.no_of_finished_tasks)
+        </dd>
+
+      </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
